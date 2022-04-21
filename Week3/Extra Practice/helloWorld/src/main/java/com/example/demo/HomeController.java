@@ -1,20 +1,17 @@
 package com.example.demo;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-@RestController
+@Controller
 public class HomeController {
 	
 	@RequestMapping("/")
-	public String index(@RequestParam(value = "q", required=false)String searchQuery) {
-		if(searchQuery == null) {
-			return "You searched for nothing";
-		}
-		else {
-			return "You searched for: " + searchQuery;
-		}
+	public String index(Model model) {
+		model.addAttribute("dojoName", "Burbank");
+		return "demo.jsp";
+		
 	}
 	@RequestMapping("/greeting")
 	public String greeting() {
