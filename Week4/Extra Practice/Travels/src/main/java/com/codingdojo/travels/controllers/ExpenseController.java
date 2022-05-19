@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.codingdojo.travels.models.Expense;
 import com.codingdojo.travels.services.ExpenseService;
@@ -45,4 +47,21 @@ public class ExpenseController {
 		}
 	}
 	
+	@GetMapping("/edit/{id}")
+	public String view(@PathVariable("id") Long id, Model model) {
+		Expense expense = expenseService.findExpenseById(id);
+		model.addAttribute("expense", expense);
+		return "edit.jsp";
+	}
+	
+	@PutMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Long id, Model model, @Valid @ModelAttribute("expense") Expense expense, BindingResult result) {
+		if (result.hasErrors()) {
+			return "edit.jsp";
+		}
+		else {
+			expenseService.updateExpense(expense);
+			return "redirect:/expenses";
+		}
+	}
 }

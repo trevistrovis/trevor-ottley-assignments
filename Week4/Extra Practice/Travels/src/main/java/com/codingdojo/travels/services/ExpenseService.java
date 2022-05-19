@@ -26,13 +26,17 @@ public class ExpenseService {
 		return expenseRepository.save(expense);
 	}
 	
-	public Expense findExpense(Long id) {
+	public Expense findExpenseById(Long id) {
 		Optional<Expense> optionalExpense = expenseRepository.findById(id);
 		if(optionalExpense.isPresent()) {
 			return optionalExpense.get();
 		}else {
 			return null;
 		}
+	}
+	
+	public Expense updateExpense(Expense expense) {
+		return expenseRepository.save(expense);
 	}
 	
 }
